@@ -70,15 +70,15 @@ class MainHandler(webapp2.RequestHandler):
         error = self.request.get("error")
         error_element = "<p class='error'>" + error + "</p>" if error else ""
 
-        username = self.request.get("username") if username else ""
-        email = self.request.get("email") if email else ""
+        username = self.request.get("username") 
+        email = self.request.get("email")
 
         full_response = page_header + (response % {"username": username, "email": email}) + error_element + page_footer
         self.response.out.write(full_response)
 
     def get(self):
 
-        self.write_response
+        self.write_response()
 
 class WelcomeHandler(webapp2.RequestHandler):
     def post(self):
@@ -103,7 +103,7 @@ class WelcomeHandler(webapp2.RequestHandler):
             error += "Invalid email address.  "
 
         if error != "":
-            self.redirect("/?error=" + error)
+            self.redirect("/?username=" + user_name + "&email=" + email + "&error=" + error)
 
         welcome = "<h2> Welcome, " + user_name + "! </h2>"
         full_welcome = page_header + welcome + page_footer
